@@ -1,2 +1,5 @@
 # lore
-lore - story editor
+lore - simple interactive story system
+
+https://leweyg.github.io/lore/
+
