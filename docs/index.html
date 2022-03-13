@@ -13,6 +13,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+.option_div_style {
+  border-radius: 15px;
+  border-color: lightblue;
+  border: 1px solid lightblue;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.option_div_style:hover {
+  background-color: lightgreen;
+}
+.option_div_style_first {
+  background-color: rgba(173, 216, 230, 0.13);
+}
 </style>
 <body class="w3-light-grey">
 
@@ -21,33 +34,50 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 
   <!-- The Grid -->
   <div class="w3-row-padding">
+    <p>
+      <span id="main_story_title" onclick="lore.restart();">Story Title</span>
+      <span id="main_page_id" onclick="lore.restart();">begining</span>
+    </p>
   
     <!-- Left Column -->
     <div class="w3-third">
     
       <div class="w3-white w3-text-grey w3-card-4">
         <div class="w3-container">
-            <h2 id="main_title_time" class="w3-center">
-                time now
+            <h2 id="main_page_title" class="w3-center">
+                Page Title
             </h2>
+            <p id="main_page_text">Paragraph of text goes here.</p>
 
+            <div id="main_options" width="80%">
+              <div class="option_div_style option_div_style_first">
+                Option One
+              </div>
+              <div class="option_div_style">
+                Option Two
+              </div>
+              <div class="option_div_style">Option Three</div>
+            </div>
 
-    <script src="timing.js"></script>
     <script>
-        main_title_time.innerHTML = titleLocalTime();
 
-        function writeDetails() {
-            var details = timingDetails();
-            for (var di in details) {
-                var det = details[di];
-                document.write("<p><i class=\"fa fa-");
-                document.write(det.icon);
-                document.write(" fa-fw w3-margin-right w3-large w3-text-teal\"></i>");
-                document.write(det.title + ": <u>" + det.subtitle + ":</u> " + det.desc);
-                document.write("</p>\n");
-            }
-        }
-        writeDetails();
+    </script>
+    <script src="story.json.js"></script>
+    <script src="lore.js"></script>
+    <script>
+
+      var lore = lore_init(main_story, main_page_title, main_page_text, main_options);
+      var redraw_link = null;
+      lore.post_redraw = function() {
+        var page = lore.currentPage();
+        main_story_title.innerText = lore.story.about.title;
+        //main_page_home_link.innerText = "" + lore.story.about.first_page;
+        var isOnFirstPage = (page.id == lore.story.about.first_page);
+        main_page_id.innerText = isOnFirstPage ? "" : "/ " + page.id;
+        if (redraw_link) redraw_link();
+      };
+      lore.redraw();
+
     </script>
 
 <!--
@@ -144,8 +174,17 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 </div>
 
 <footer class="w3-container w3-teal w3-center w3-margin-top">
+  <p><a href="http://www.lewcid.com" id="main_link">Author</a></p>
   <p><a href="http://lewcid.com">Lewcid.com</a></p>
 </footer>
+
+<script>
+  redraw_link = function () {
+      main_link.innerText = lore.story.about.by;
+      main_link.href = lore.story.about.url;
+  };
+  lore.redraw();
+</script>
 
 </body>
 </html>
