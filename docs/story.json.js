@@ -31,6 +31,18 @@ var main_story = {
             options : {
                 contents : "Option back to the 'Contents' page.",
                 intro : "Experiential example",
+                story_data : {
+                    text : "Story JSON file",
+                    url : "https://github.com/leweyg/lore/blob/main/docs/story.json.js",
+                },
+                js_runtime : {
+                    text : "JavaScript Runtime",
+                    url : "https://github.com/leweyg/lore/blob/main/docs/lore.js",
+                },
+                html_host : {
+                    text : "HTML Host Page",
+                    url : "https://github.com/leweyg/lore/blob/main/docs/index.html",
+                },
                 bad_link : "Bad links don't work!",
             },
         },

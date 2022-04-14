@@ -62,7 +62,15 @@ function lore_init(story, titleEl, paraEl, optionsEl) {
                 var el = "<div class='option_div_style ";
                 if (isFirst) el += " option_div_style_first ";
                 el += "' onclick=\"lore.selected_option('" + optionId + "')\" ";
-                el += ">" + option.text + "</div>\n";
+                el += ">";
+                if (option.url) {
+                    el += "<a href=\"" + option.url + "\">";
+                }
+                el += option.text;
+                if (option.url) {
+                    el += " &#10697;</a> ";
+                }
+                el += "</div>\n";
                 els += el;
                 isFirst = false;
             }
@@ -71,7 +79,9 @@ function lore_init(story, titleEl, paraEl, optionsEl) {
         selected_option : function(optionId) {
             var page = this.currentPage();
             var option = page.options[optionId];
-            if (option.goto_page) {
+            if (option.url) {
+                window.location.href = option.url;
+            } else if (option.goto_page) {
                 this.gotoPage( option.goto_page );
             }
             this.redraw();
